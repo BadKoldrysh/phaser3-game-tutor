@@ -26,6 +26,10 @@ class Scene2 extends Phaser.Scene {
     this.ship1.setScale(2);
     this.ship2.flipY = true;
 
+    this.ship1.setOrigin(0, 0);
+    this.ship2.setOrigin(0, 0);
+    this.ship3.setOrigin(0, 0);
+
     // text with basic style
     this.add.text(10, 10, "Playing game...", {
       font: "13px monospace",
@@ -35,11 +39,23 @@ class Scene2 extends Phaser.Scene {
 
   update() {
     this.moveShip(this.ship1, 1);
-    this.moveShip(this.ship2, -1);
+    this.moveShip(this.ship2, 2);
+    this.moveShip(this.ship3, 3);
   }
 
   // method for ship moving
   moveShip(ship, speed) {
     ship.y += speed;
+
+    if (ship.y > config.height) {
+      this.resetShipPos(ship);
+    }
+  }
+
+  // return ship to start position
+  resetShipPos(ship) {
+    ship.y = -ship.height;
+    var randomX = Phaser.Math.Between(0, config.width);
+    ship.x = randomX;
   }
 }
