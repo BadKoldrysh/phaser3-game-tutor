@@ -34,8 +34,12 @@ class Scene2 extends Phaser.Scene {
   }
 
   update() {
-    // some transforms
-    this.ship3.angle += 1;
-    this.ship1.angle -= 2;
+    this.moveShip(this.ship1, 1);
+    this.moveShip(this.ship2, -1);
+  }
+
+  // method for ship moving
+  moveShip(ship, speed) {
+    ship.y += speed;
   }
 }
