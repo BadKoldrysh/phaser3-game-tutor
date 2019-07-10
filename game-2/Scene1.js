@@ -5,9 +5,12 @@ class Scene1 extends Phaser.Scene {
   }
 
   preload() {
-    // function for image loading
+    // functions for image loading
     // args: (image ID, URL)
     this.load.image("background", "game-2/assets/background.png");
+    this.load.image("ship", "game-2/assets/ship.png");
+    this.load.image("ship-2", "game-2/assets/ship-2.png");
+    this.load.image("ship-3", "game-2/assets/ship-3.png");
   }
 
   create() {
