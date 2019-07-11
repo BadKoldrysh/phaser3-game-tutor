@@ -103,6 +103,11 @@ class Scene2 extends Phaser.Scene {
     this.background.tilePositionY -= 0.5;
 
     this.movePlayerManager();
+
+    for (var i = 0; i < this.projectiles.getChildren().length; i++) {
+      var beam = this.projectiles.getChildren()[i];
+      beam.update();
+    }
   }
 
   // method for ship moving
