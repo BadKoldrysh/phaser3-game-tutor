@@ -79,11 +79,13 @@ class Scene2 extends Phaser.Scene {
 
     this.loadPowerUps();
 
+    // set player
     this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
     this.player.play("thrust");
 
     // a variable to listen for Keyboard Events
     this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.player.setCollideWorldBounds(true);
   }
 
   update() {
