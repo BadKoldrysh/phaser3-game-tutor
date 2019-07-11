@@ -50,5 +50,12 @@ class playGame extends Phaser.Scene {
 
     // allow keys inputs to control the player
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // set world bound to allow camera to follow the player
+    this.myCam = this.cameras.main;
+    this.myCam.setBounds(0, 0, game.config.width * 3, game.config.height);
+
+    // making the camera following the player
+    this.myCam.startFollow(this.player);
   }
 }
