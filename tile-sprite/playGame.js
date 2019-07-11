@@ -38,7 +38,7 @@ class playGame extends Phaser.Scene {
     this.ground.y = 12 * 16;
 
     // add player
-    this.player = this.add.sprite(game.config.width * 1.5, game.config.height / 2, "player");
+    this.player = this.add.sprite(game.config.width, game.config.height / 2, "player");
     // create animations
     this.anims.create({
       key: "fly",
@@ -57,5 +57,21 @@ class playGame extends Phaser.Scene {
 
     // making the camera following the player
     this.myCam.startFollow(this.player);
+  }
+
+  update() {
+    // move the player when the arrow keys are pressed
+    if (this.cursors.left.isDown && this.player.x > 0) {
+      this.player.x -= 3;
+      this.player.scaleX = 1;
+    } else if (this.cursors.right.isDown && this.player.x < game.config.width * 3) {
+      this.player.x += 3;
+      this.player.scaleX = -1;
+    }
+
+    // scroll the texture of the tilesprites proportionally to the camera scroll
+    this.bg_1.tilePositionX = this.myCam.scrollX * .3;
+    this.bg_2.tilePositionX = this.myCam.scrollX * .6;
+    this.ground.tilePositionX = this.myCam.scrollX;
   }
 }
