@@ -7,9 +7,17 @@ class Scene2 extends Phaser.Scene {
   // method for loading ships sprites and animations
   loadShips() {
     // adding sprites for ships
-    this.ship1 = this.add.sprite(config.width / 2 - 50, config.height / 2, "ship");
+    this.ship1 = this.add.sprite(
+      config.width / 2 - 50,
+      config.height / 2,
+      "ship"
+    );
     this.ship2 = this.add.sprite(config.width / 2, config.height / 2, "ship2");
-    this.ship3 = this.add.sprite(config.width / 2 + 50, config.height / 2, "ship3");
+    this.ship3 = this.add.sprite(
+      config.width / 2 + 50,
+      config.height / 2,
+      "ship3"
+    );
 
     this.ship1.setOrigin(0, 0);
     this.ship2.setOrigin(0, 0);
@@ -34,6 +42,53 @@ class Scene2 extends Phaser.Scene {
       frameRate: 20,
       repeat: -1
     });
+  }
+
+  // method for loading power-ups with animations etc.
+  loadPowerUps() {
+    // animations for power-ups
+    this.anims.create({
+      key: "red",
+      frames: this.anims.generateFrameNumbers("power-up", {
+        start: 0,
+        end: 1
+      }),
+      frameRate: 20,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "gray",
+      frames: this.anims.generateFrameNumbers("power-up", {
+        start: 2,
+        end: 3
+      }),
+      frameRate: 20,
+      repeat: -1
+    });
+    // for adding physics laws
+    this.powerUps = this.physics.add.group();
+
+    // random position power-ups on the ground
+    var maxObjects = 4;
+    for (var i = 0; i < maxObjects; i++) {
+      var powerUp = this.physics.add.sprite(16, 16, "power-up");
+      this.powerUps.add(powerUp);
+      powerUp.setRandomPosition(0, 0, game.config.width, game.config.height);
+
+      // random adding power-ups to scene
+      if (Math.random() > 0.5) {
+        powerUp.play("red");
+      } else {
+        powerUp.play("gray");
+      }
+
+      // speed up
+      powerUp.setVelocity(100, 100);
+      // set collide with game walls
+      powerUp.setCollideWorldBounds(true);
+      powerUp.setBounce(1);
+
+    }
   }
 
   create() {
@@ -68,7 +123,9 @@ class Scene2 extends Phaser.Scene {
     this.ship3.setInteractive();
 
     // event listener for clicking on game objects
-    this.input.on('gameobjectdown', this.destroyShip, this);
+    this.input.on("gameobjectdown", this.destroyShip, this);
+
+    this.loadPowerUps();
 
     // text with basic style
     this.add.text(10, 10, "Playing game...", {
