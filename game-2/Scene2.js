@@ -81,6 +81,9 @@ class Scene2 extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
     this.player.play("thrust");
+
+    // a variable to listen for Keyboard Events
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
   update() {
@@ -90,6 +93,8 @@ class Scene2 extends Phaser.Scene {
 
     // run background
     this.background.tilePositionY -= 0.5;
+
+    this.movePlayerManager();
   }
 
   // method for ship moving
@@ -113,5 +118,14 @@ class Scene2 extends Phaser.Scene {
     // when object is clicked - we're switching texture to explosion
     gameObject.setTexture("exposion");
     gameObject.play("explode");
+  }
+
+  // method for listening player's actions
+  movePlayerManager() {
+    if (this.cursorKeys.left.isDown) {
+      this.player.setVelocityX(-gameSettings.playerSpeed);
+    } else if (this.cursorKeys.right.isDown) {
+      this.player.setVelocityX(gameSettings.playerSpeed);
+    }
   }
 }
