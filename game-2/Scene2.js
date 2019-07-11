@@ -65,15 +65,6 @@ class Scene2 extends Phaser.Scene {
 
     this.loadShips();
 
-    // create animation for explosion
-    this.anims.create({
-      key: "explode",
-      frames: this.anims.generateFrameNumbers("explosion"),
-      frameRate: 20,
-      repeat: 0,
-      hideOnComplete: true
-    });
-
     // start ships animations
     this.ship1.play("ship1_anim");
     this.ship2.play("ship2_anim");
@@ -88,11 +79,8 @@ class Scene2 extends Phaser.Scene {
 
     this.loadPowerUps();
 
-    // text with basic style
-    this.add.text(10, 10, "Playing game...", {
-      font: "13px monospace",
-      fill: "yellow"
-    });
+    this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+    this.player.play("thrust");
   }
 
   update() {

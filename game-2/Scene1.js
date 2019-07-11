@@ -94,5 +94,22 @@ class Scene1 extends Phaser.Scene {
       frameRate: 20,
       repeat: -1
     });
+
+    // create animation for explosion
+    this.anims.create({
+      key: "explode",
+      frames: this.anims.generateFrameNumbers("explosion"),
+      frameRate: 20,
+      repeat: 0,
+      hideOnComplete: true
+    });
+
+    // animations for player
+    this.anims.create({
+      key: "thrust",
+      frames: this.anims.generateFrameNumbers("player"),
+      frameRate: 20,
+      repeat: -1,
+    });
   }
 }
