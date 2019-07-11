@@ -34,6 +34,13 @@ class Scene1 extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 16,
     });
+
+    // load player spritesheet
+    this.load.spritesheet("player", "game-2/assets/spritesheets/player.png",
+    {
+      frameWidth: 16,
+      frameHeight: 24,
+    });
   }
 
   create() {
