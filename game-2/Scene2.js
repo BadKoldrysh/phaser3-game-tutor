@@ -86,6 +86,9 @@ class Scene2 extends Phaser.Scene {
     // a variable to listen for Keyboard Events
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);
+
+    // set spacebar
+    this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
   }
 
   update() {
@@ -128,6 +131,16 @@ class Scene2 extends Phaser.Scene {
       this.player.setVelocityX(-gameSettings.playerSpeed);
     } else if (this.cursorKeys.right.isDown) {
       this.player.setVelocityX(gameSettings.playerSpeed);
+    }
+
+    if (this.cursorKeys.up.isDown) {
+      this.player.setVelocityY(-gameSettings.playerSpeed);
+    } else if (this.cursorKeys.down.isDown) {
+      this.player.setVelocityY(gameSettings.playerSpeed);
+    }
+
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      console.log("Fire!");
     }
   }
 }
