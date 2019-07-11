@@ -36,5 +36,19 @@ class playGame extends Phaser.Scene {
     this.ground.setScrollFactor(0);
     // position this layer on the bottom of screen
     this.ground.y = 12 * 16;
+
+    // add player
+    this.player = this.add.sprite(game.config.width * 1.5, game.config.height / 2, "player");
+    // create animations
+    this.anims.create({
+      key: "fly",
+      frames: this.anims.generateFrameNumbers("player"),
+      frameRate: 20,
+      repeat: -1,
+    });
+    this.player.play("fly");
+
+    // allow keys inputs to control the player
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 }
