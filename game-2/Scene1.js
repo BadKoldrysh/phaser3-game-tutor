@@ -8,9 +8,27 @@ class Scene1 extends Phaser.Scene {
     // functions for image loading
     // args: (image ID, URL)
     this.load.image("background", "game-2/assets/background.png");
-    this.load.image("ship", "game-2/assets/ship.png");
-    this.load.image("ship-2", "game-2/assets/ship-2.png");
-    this.load.image("ship-3", "game-2/assets/ship-3.png");
+
+    this.load.spritesheet("ship", "game-2/assets/spritesheets/ship.png",
+    {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("ship2", "game-2/assets/spritesheets/ship2.png",
+    {
+      frameWidth: 32,
+      frameHeight: 16,
+    });
+    this.load.spritesheet("ship3", "game-2/assets/spritesheets/ship3.png",
+    {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("explosion", "game-2/assets/spritesheets/explosion.png",
+    {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
   }
 
   create() {
