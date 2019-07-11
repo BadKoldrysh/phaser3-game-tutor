@@ -1,5 +1,5 @@
 var config = {
-    width: 1584,
+    width: 384,
     height: 240,
     pixelArt: true,
     physics: {
