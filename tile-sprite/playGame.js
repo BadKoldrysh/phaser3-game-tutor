@@ -39,6 +39,7 @@ class playGame extends Phaser.Scene {
 
     // add player
     this.player = this.add.sprite(game.config.width, game.config.height / 2, "player");
+    this.player.scaleX = -1;
     // create animations
     this.anims.create({
       key: "fly",
@@ -56,7 +57,7 @@ class playGame extends Phaser.Scene {
     this.myCam.setBounds(0, 0, game.config.width * 3, game.config.height);
 
     // making the camera following the player
-    this.myCam.startFollow(this.player);
+    this.myCam.startFollow(this.player,false,1,1,-game.config.width / 2 + 50);
   }
 
   update() {
