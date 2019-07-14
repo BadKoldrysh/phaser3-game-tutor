@@ -135,17 +135,25 @@ class Scene2 extends Phaser.Scene {
 
   // method for listening player's actions
   movePlayerManager() {
+    var drag = 1200;
     if (this.cursorKeys.left.isDown) {
       this.player.setVelocityX(-gameSettings.playerSpeed);
     } else if (this.cursorKeys.right.isDown) {
       this.player.setVelocityX(gameSettings.playerSpeed);
+    } else {
+      // for stop player
+      this.player.setDragX(drag);
     }
 
     if (this.cursorKeys.up.isDown) {
       this.player.setVelocityY(-gameSettings.playerSpeed);
     } else if (this.cursorKeys.down.isDown) {
       this.player.setVelocityY(gameSettings.playerSpeed);
+    } else {
+      // for stop player
+      this.player.setDragY(drag);
     }
+    
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.shootBeam();
