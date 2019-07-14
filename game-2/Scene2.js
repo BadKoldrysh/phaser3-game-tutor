@@ -92,6 +92,12 @@ class Scene2 extends Phaser.Scene {
 
     // variable for store our projectiles
     this.projectiles = this.add.group();
+
+    this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+      projectile.destroy();
+    });
+
+    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
   }
 
   update() {
@@ -162,5 +168,11 @@ class Scene2 extends Phaser.Scene {
 
   shootBeam() {
     var beam = new Beam(this);
+  }
+
+  pickPowerUp(player, powerUp) {
+    // first arg: disableGameObject
+    // sec arg: hideGameObject
+    powerUp.disableBody(true, true);
   }
 }
