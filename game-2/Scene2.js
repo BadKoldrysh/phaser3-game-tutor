@@ -158,6 +158,14 @@ class Scene2 extends Phaser.Scene {
     }
   }
 
+  zeroPad(number, size) {
+    var stringNumber = String(number);
+    while (stringNumber.length < (size || 2)) {
+      stringNumber = "0" + stringNumber;
+    }
+    return stringNumber;
+  }
+
   // displaying black background for score
   displayScoreBg() {
     var graphics = this.add.graphics();
@@ -175,8 +183,10 @@ class Scene2 extends Phaser.Scene {
   // collision between beems and enemies
   hitEnemy(projectile, enemy) {
     projectile.destroy();
+
     this.score += 15;
-    this.scoreLabel.text = "SCORE " + this.score;
+    var scoreFormatted = this.zeroPad(this.score, 6);
+    this.scoreLabel.text = "SCORE " + scoreFormatted;
 
     this.resetShipPos(enemy);
   }
