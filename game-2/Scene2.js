@@ -53,13 +53,10 @@ class Scene2 extends Phaser.Scene {
       // set collide with game walls
       powerUp.setCollideWorldBounds(true);
       powerUp.setBounce(1);
-
     }
   }
 
   create() {
-    this.score = 0;
-
     // for running background
     this.background = this.add.tileSprite(
       0,
@@ -69,6 +66,11 @@ class Scene2 extends Phaser.Scene {
       "background"
     );
     this.background.setOrigin(0, 0);
+
+    // 3.1 Add HUD background
+    this.displayScoreBg();
+
+    this.score = 0;
 
     this.loadShips();
 
@@ -87,7 +89,11 @@ class Scene2 extends Phaser.Scene {
     this.loadPowerUps();
 
     // set player
-    this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+    this.player = this.physics.add.sprite(
+      config.width / 2 - 8,
+      config.height - 64,
+      "player"
+    );
     this.player.play("thrust");
 
     // a variable to listen for Keyboard Events
@@ -95,20 +101,43 @@ class Scene2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
 
     // set spacebar
-    this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.spacebar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
 
     // variable for store our projectiles
     this.projectiles = this.add.group();
 
-    this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+    this.physics.add.collider(this.projectiles, this.powerUps, function(
+      projectile,
+      powerUp
+    ) {
       projectile.destroy();
     });
 
-    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+    this.physics.add.overlap(
+      this.player,
+      this.powerUps,
+      this.pickPowerUp,
+      null,
+      this
+    );
 
-    this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+    this.physics.add.overlap(
+      this.player,
+      this.enemies,
+      this.hurtPlayer,
+      null,
+      this
+    );
 
-    this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+    this.physics.add.overlap(
+      this.projectiles,
+      this.enemies,
+      this.hitEnemy,
+      null,
+      this
+    );
 
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 00", 16);
   }
@@ -127,6 +156,20 @@ class Scene2 extends Phaser.Scene {
       var beam = this.projectiles.getChildren()[i];
       beam.update();
     }
+  }
+
+  // displaying black background for score
+  displayScoreBg() {
+    var graphics = this.add.graphics();
+    graphics.fillStyle(0x000000, 1);
+    graphics.beginPath();
+    graphics.moveTo(0, 0);
+    graphics.lineTo(config.width, 0);
+    graphics.lineTo(config.width, 20);
+    graphics.lineTo(0, 20);
+    graphics.lineTo(0, 0);
+    graphics.closePath();
+    graphics.fillPath();
   }
 
   // collision between beems and enemies
@@ -156,7 +199,7 @@ class Scene2 extends Phaser.Scene {
 
   // return ship to start position
   resetShipPos(ship) {
-    ship.y = -ship.height-200;
+    ship.y = 0;
     var randomX = Phaser.Math.Between(0, config.width);
     ship.x = randomX;
   }
@@ -171,7 +214,7 @@ class Scene2 extends Phaser.Scene {
   // method for listening player's actions
   movePlayerManager() {
     var drag = gameSettings.playerSpeed * 6;
-    
+
     if (this.cursorKeys.left.isDown) {
       this.player.setVelocityX(-gameSettings.playerSpeed);
     } else if (this.cursorKeys.right.isDown) {
@@ -189,7 +232,6 @@ class Scene2 extends Phaser.Scene {
       // for stop player
       this.player.setDragY(drag);
     }
-    
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.shootBeam();
