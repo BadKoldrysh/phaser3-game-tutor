@@ -19,6 +19,11 @@ class Scene2 extends Phaser.Scene {
       "ship3"
     );
 
+    this.enemies = this.physics.add.group();
+    this.enemies.add(this.ship1);
+    this.enemies.add(this.ship2);
+    this.enemies.add(this.ship3);
+
     this.ship1.setOrigin(0, 0);
     this.ship2.setOrigin(0, 0);
     this.ship3.setOrigin(0, 0);
@@ -98,6 +103,14 @@ class Scene2 extends Phaser.Scene {
     });
 
     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+
+    this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+
+    this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
+      projectile.destroy();
+      enemy.setTexture("explosion");
+      enemy.play("explode");
+    });
   }
 
   update() {
@@ -114,6 +127,13 @@ class Scene2 extends Phaser.Scene {
       var beam = this.projectiles.getChildren()[i];
       beam.update();
     }
+  }
+
+  // method for collision between ships and player
+  hurtPlayer(player, enemy) {
+    this.resetShipPos(enemy);
+    player.x = config.width / 2 - 8;
+    player.y = config.height - 64;
   }
 
   // method for ship moving
@@ -141,7 +161,8 @@ class Scene2 extends Phaser.Scene {
 
   // method for listening player's actions
   movePlayerManager() {
-    var drag = 1200;
+    var drag = gameSettings.playerSpeed * 6;
+    
     if (this.cursorKeys.left.isDown) {
       this.player.setVelocityX(-gameSettings.playerSpeed);
     } else if (this.cursorKeys.right.isDown) {
