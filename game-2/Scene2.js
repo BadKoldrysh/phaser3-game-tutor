@@ -58,6 +58,8 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
+    this.score = 0;
+
     // for running background
     this.background = this.add.tileSprite(
       0,
@@ -107,6 +109,8 @@ class Scene2 extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
 
     this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+
+    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 00", 16);
   }
 
   update() {
@@ -128,6 +132,8 @@ class Scene2 extends Phaser.Scene {
   // collision between beems and enemies
   hitEnemy(projectile, enemy) {
     projectile.destroy();
+    this.score += 15;
+    this.scoreLabel.text = "SCORE " + this.score;
 
     this.resetShipPos(enemy);
   }
