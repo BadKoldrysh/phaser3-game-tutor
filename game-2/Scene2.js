@@ -106,11 +106,7 @@ class Scene2 extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
 
-    this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
-      projectile.destroy();
-      enemy.setTexture("explosion");
-      enemy.play("explode");
-    });
+    this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
   }
 
   update() {
@@ -127,6 +123,14 @@ class Scene2 extends Phaser.Scene {
       var beam = this.projectiles.getChildren()[i];
       beam.update();
     }
+  }
+
+  // collision between beems and enemies
+  hitEnemy(projectile, enemy) {
+    projectile.destroy();
+
+    enemy.setTexture("explosion");
+    enemy.play("explode");
   }
 
   // method for collision between ships and player
@@ -155,7 +159,7 @@ class Scene2 extends Phaser.Scene {
   // destroy ship
   destroyShip(pointer, gameObject) {
     // when object is clicked - we're switching texture to explosion
-    gameObject.setTexture("exposion");
+    gameObject.setTexture("explosion");
     gameObject.play("explode");
   }
 
