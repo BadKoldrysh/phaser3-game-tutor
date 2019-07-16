@@ -129,8 +129,7 @@ class Scene2 extends Phaser.Scene {
   hitEnemy(projectile, enemy) {
     projectile.destroy();
 
-    enemy.setTexture("explosion");
-    enemy.play("explode");
+    this.resetShipPos(enemy);
   }
 
   // method for collision between ships and player
@@ -151,7 +150,7 @@ class Scene2 extends Phaser.Scene {
 
   // return ship to start position
   resetShipPos(ship) {
-    ship.y = -ship.height;
+    ship.y = -ship.height-200;
     var randomX = Phaser.Math.Between(0, config.width);
     ship.x = randomX;
   }
