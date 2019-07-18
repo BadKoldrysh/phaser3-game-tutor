@@ -182,6 +182,8 @@ class Scene2 extends Phaser.Scene {
 
   // collision between beems and enemies
   hitEnemy(projectile, enemy) {
+    var explosion = new Explosion(this, enemy.x, enemy.y);
+
     projectile.destroy();
 
     this.score += 15;
@@ -192,10 +194,11 @@ class Scene2 extends Phaser.Scene {
   }
 
   // method for collision between ships and player
-  hurtPlayer(player, enemy) {
+  hurtPlayer(player, enemy){
     this.resetShipPos(enemy);
-    player.x = config.width / 2 - 8;
-    player.y = config.height - 64;
+
+    var explosion = new Explosion(this, player.x, player.y);
+    player.disableBody(true, true);
   }
 
   // method for ship moving
@@ -209,7 +212,7 @@ class Scene2 extends Phaser.Scene {
 
   // return ship to start position
   resetShipPos(ship) {
-    ship.y = 0;
+    ship.y = 20;
     var randomX = Phaser.Math.Between(0, config.width);
     ship.x = randomX;
   }
@@ -244,7 +247,9 @@ class Scene2 extends Phaser.Scene {
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.shootBeam();
+      if (this.player.active){
+        this.shootBeam();
+      }
     }
   }
 
