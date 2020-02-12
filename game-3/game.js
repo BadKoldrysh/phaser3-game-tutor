@@ -1,5 +1,7 @@
 const params = {
     tileSize: 16,
+    root: "game-3/",
+    assets: "game-3/assets/",
 }
 
 const config = {

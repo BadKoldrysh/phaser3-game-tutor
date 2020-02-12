@@ -8,7 +8,12 @@ class Scene1 extends Phaser.Scene
 
     preload()
     {
-        this.load.image('tiles', "game-3/assets/block.png");
+        this.load.image('tiles', params.assets + "block.png");
+
+        this.load.spritesheet("player", params.assets + "player.png", {
+            frameWidth: params.tileSize,
+            frameHeight: params.tileSize,
+        });
     }
 
     create()
@@ -38,5 +43,7 @@ class Scene1 extends Phaser.Scene
         });
         let tiles = map.addTilesetImage('tiles');
         let layer = map.createStaticLayer(0, tiles, 0, 0);
+        let player = this.add.sprite(32 + 8, 8, "player");
+
     }
 }
