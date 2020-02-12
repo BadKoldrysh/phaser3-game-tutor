@@ -1,7 +1,11 @@
+const params = {
+    tileSize: 16,
+}
+
 const config = {
-    width: 320,
-    height: 400,
-    backgroundColor: 0x999da6,
+    width: 5 * params.tileSize,
+    height: 15 * params.tileSize,
+    backgroundColor: 0xfcf8e8,
     scene: [Scene1],
     pixelArt: true,
     physics: {
